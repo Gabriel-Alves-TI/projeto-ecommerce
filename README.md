@@ -1,6 +1,6 @@
 # Projeto E-commerce
 
-Este é um projeto de e-commerce desenvolvido para gerenciar produtos, categorias e pedidos. Ele inclui funcionalidades básicas para operações CRUD, integração com banco de dados utilizando o ORM Sequelize.
+Este é um projeto de e-commerce desenvolvido para gerenciar produtos e pedidos. Ele inclui funcionalidades básicas para operações CRUD, integração com banco de dados utilizando o ORM Sequelize.
 
 ## 📋 Funcionalidades
 
