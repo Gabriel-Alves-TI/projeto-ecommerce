@@ -14,6 +14,10 @@ Este é um projeto de e-commerce desenvolvido para gerenciar produtos e pedidos.
   - Cadastrar
   - Editar (produto, quantidade)
   - Excluir
+- Gerenciamento de Usuários:
+  - Buscar
+  - Cadastrar
+  - Login
 - Integração com banco de dados MySQL usando Sequelize.
 
 ## 🛠️ Tecnologias Utilizadas

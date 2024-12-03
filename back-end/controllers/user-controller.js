@@ -57,34 +57,38 @@ exports.registerUser = async (req, res, next) => {
 }
 
 exports.login = async (req, res, next) => {
-    try{
+    try {
         const user = await User.findOne({
             where: { email: req.body.email }
-        })
+        });
 
-        if (user < 1) {
-            res.status(401).json({ error: 'Authentication failure.'});
+        if (!user) {
+            return res.status(401).json({ error: 'Authentication failure. User not found.' });
         }
 
-        bcrypt.compare(req.body.password, user.password, (err, result) => {
-            if (err) {
-                return res.status(401).send({ mensagem: 'Authentication failure'});
-            }
-            if (result) {
-                let token = jwt.sign({
-                    id: user.id,
-                    email: user.email
-                }, 'secret',
-                {   
-                    expiresIn: '1h'
-                });
-                return res.status(200).send({ mensagem: 'Authentication successful',
-                    token: token
-                });
-            }
-            return res.status(401).send({ mensagem: 'Authentication failure.'});
-        })
-    }catch (error) {
+        const passwordMatch = await bcrypt.compare(req.body.password, user.password);
 
+        if (!passwordMatch) {
+            return res.status(401).json({ mensagem: 'Authentication failure. Invalid password.' });
+        }
+
+        const token = jwt.sign(
+            {
+                id: user.id,
+                email: user.email
+            },
+            'secret',
+            {
+                expiresIn: '1h'
+            }
+        );
+
+        return res.status(200).json({
+            mensagem: 'Authentication successful',
+            token: token
+        });
+
+    } catch (error) {
+        return res.status(500).json({ error: 'Error during login process.', details: error });
     }
-}
+};
